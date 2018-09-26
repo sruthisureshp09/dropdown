@@ -1,0 +1,153 @@
+<app-admin-layout></app-admin-layout>
+<div id="page-wrapper">
+  <div class="row bg-title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h4>Add/Edit Listing</h4>
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb pull-right">
+        <li>
+          <a href="dashboard">Dashboard</a>
+        </li>
+        <li class="active">Add/Edit Listing</li>
+      </ol>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /. ROW  -->
+  <div id="page-inner">
+
+    <div class="row bott-wid">
+      <div class="col-md-12 col-sm-12">
+        <div class="card">
+
+          <div class="card-header">
+            <h4>Add/Edit Listing</h4>
+          </div>
+          <div class="alert alert-danger" [hidden]=!error>
+            {{ error }}
+          </div>
+          <div class="card-body">
+            <form class="form-horizontal" method="post" #productForm=ngForm (ngSubmit)="storeProduct()">
+
+              <div class="form-group">
+                <label class="col-md-2 col-sm-2" for="inputEmail4">Category</label>
+                <div class="col-md-10 col-sm-9">
+                  <select class="form-control" name="category_id" required (change)="selectedCategory1($event.target.value)">
+                    <option value="0">Choose Category</option>
+                    <option *ngFor="let category of categories" [value]="category.id"> {{category.category_name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" *ngIf="subcategories1">
+                <label class="col-md-2 col-sm-3" for=" inputEmail4 ">Category</label>
+                <div class="col-md-10 col-sm-9">
+                  <select class="form-control " name="category_id " required>
+                    <option value="0 ">Choose Category</option>
+                    <option *ngFor="let subcategory of subcategories1 " [value]="subcategory.id "> {{subcategory.category_name}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 col-sm-3" for="inputTitle">Title</label>
+                <div class="col-md-10 col-sm-9">
+                  <input type="text" [(ngModel)]="product.title" class="form-control" name="title" id="inputTitle" placeholder="title" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 col-sm-3" for="inputAddress">Address 1</label>
+                <div class="col-md-10 col-sm-9">
+                  <input type="text" [(ngModel)]="product.add1" class="form-control" id="inputAddress" placeholder="1234 Main St" name="add1"
+                    required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 col-sm-3" for="inputAddress2">Address 2</label>
+                <div class="col-md-10 col-sm-9">
+                  <input type="text" [(ngModel)]="product.add2" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"
+                    name="add2">
+                </div>
+              </div>
+
+              <div class="form-group">
+
+                <label class="col-md-2 col-sm-3" for="inputCountry"></label>
+                <div class="col-md-3">
+                  <input type="text" [(ngModel)]="product.country" class="form-control" id="inputCountry" placeholder="country" name="country"
+                    required>
+                </div>
+
+
+                <div class="col-md-3">
+                  <input type="text" [(ngModel)]="product.state" class="form-control" id="inputState" placeholder="state" name="state" required>
+                </div>
+
+
+                <div class="col-md-2">
+                  <input type="text" [(ngModel)]="product.city" class="form-control" id="inputCity" placeholder="city" name="city" required>
+                </div>
+
+                <div class="col-md-2">
+                  <input type="text" [(ngModel)]="product.zip" class="form-control" id="inputZip" placeholder="zip" name="zip" required pattern="[0-9]{6}">
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 col-sm-3" for="inputCity">Phone Number 1</label>
+                <div class="col-md-4">
+                  <input type="text" [(ngModel)]="product.phone1" class="form-control" id="inputMob" placeholder="phone number 1" name="phone1"
+                    required pattern="[0-9]{9,12}">
+                </div>
+
+                <label class="col-md-2 " for="inputState">Phone Number 2</label>
+                <div class="col-md-4">
+                  <input type="text" [(ngModel)]="product.phone2" class="form-control" id="inputLand" placeholder="phone number 2" name="phone2"
+                    pattern="[0-9]{9,12}">
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <label class="col-md-2 col-sm-3" for="offers ">Offers</label>
+                <div class="col-md-10 col-sm-9">
+                  <input type="text " [(ngModel)]="product.offers " class="form-control " id="inputoffer " placeholder="offers
+                    " name="offers ">
+                </div>
+              </div>
+              <div class="form-group ">
+                <label class="col-md-2 col-sm-3" for="type ">Type</label>
+                <div class="col-md-10 col-sm-9">
+                  <select class="form-control " name="type" [ngModel]="product.type" (ngModelChange)="onTypeChanged($event)">
+                    <option value="0 ">Choose Type</option>
+                    <option [ngValue]="type.id" *ngFor="let type of types" name="types" [ngValue]="i">{{type.option }}</option>
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group ">
+                <label class="col-md-2 col-sm-3" for="type ">Event Category</label>
+                <div class="col-md-10 col-sm-9">
+                  <p *ngFor="let event of event_options">
+                    <input type="checkbox" name="events" value="event.id" (change)="updateChecked(event.id, $event)"> {{event.option}}
+
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 text-center">
+                  <button type="submit" class="btn theme-btn" [disabled]="!productForm.valid ">Save & Update</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,12 @@
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">Ultimate Studio</a>
+  {{loggedIn}}
+  <div>
+    <a routerLink="dashboard" class="navbar-brand btn btn-default" *ngIf="!loggedIn">Dashboard</a>
+    <a href="#" (click)="logout($event)" class="navbar-brand  btn btn-default" *ngIf="!loggedIn">Logout</a>
+    <a routerLink="login" class="navbar-brand btn btn-default" *ngIf="!loggedIn">Login</a>
+    <a routerLink="register" class="navbar-brand  btn btn-default" *ngIf="!loggedIn">Register</a>
+
+  </div>
+
+</nav>

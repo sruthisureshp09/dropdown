@@ -1,0 +1,53 @@
+<app-admin-layout></app-admin-layout>
+<div id="page-wrapper">
+  <div class="row bg-title">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h4>Add/Edit Category</h4>
+    </div>
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb pull-right">
+        <li>
+          <a href="dashboard">Dashboard</a>
+        </li>
+        <li class="active">Add/Edit Category</li>
+      </ol>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /. ROW  -->
+  <div id="page-inner">
+
+    <div class="row bott-wid">
+      <div class="col-md-12 col-sm-12">
+        <div class="card">
+          <div class="alert alert-danger" [hidden]=!error>
+            {{ error }}
+          </div>
+          <div class="card-header">
+            <h4>Add/Edit Category</h4>
+          </div>
+
+          <div class="card-body">
+            <form class="form-horizontal" method="post" #categoryForm=ngForm (ngSubmit)="storeCategory()">
+
+              <div class="form-group">
+                <label class="col-md-2 col-sm-3">Title:</label>
+                <div class="col-md-10 col-sm-9">
+                  <input [(ngModel)]="category.category_name" type="text" name="category_name" class="form-control" required placeholder="Enter Category Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 text-center">
+                  <button type="submit" class="btn theme-btn" [disabled]="!categoryForm.valid">Save & Update</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
